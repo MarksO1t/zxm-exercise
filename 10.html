@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>task 10</title>
+    <style>
+      .container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .box{
+        width: 150px;
+        padding: 20px;
+      }
+      .box1,.box2,.box3{
+        border: 1px solid #f00;
+      }
+      .box1{
+        height: 120px;
+      }
+      .box2{
+        height: 100px;
+      }
+      .box3{
+        height: 40px;
+      }
+      .box4{
+        height: 200px;
+        border: 1px solid #0f0;
+      }
+      @media screen and (max-width:640px) {
+        .container{
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: flex-start;
+        }
+        .box4{
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box box1"><p>120*150</p><p>紧贴浏览器左边</p></div>
+      <div class="box box2"><p>100*150</p></div>
+      <div class="box box3"><p>40*150</p></div>
+      <div class="box box4"><p>200*150</p><p>紧贴浏览器右边</p></div>
+    </div>
+  </body>
+</html>
