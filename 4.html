@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>task 4</title>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+      #container{
+        width: 400px;
+        height: 200px;
+        background-color: #ccc;
+        position: absolute;
+        margin: auto;
+        top: 0;bottom: 0;left: 0;right: 0;
+      }
+      .innerdiv{
+        width: 50px;
+        height: 50px;
+        background-color: yellow;
+        position: absolute;
+      }
+      #firstdiv{
+        top: 0;
+        left: 0;
+        border-radius: 0 0 50px 0;
+      }
+      #seconddiv{
+        bottom: 0;
+        right: 0;
+        border-radius: 50px 0 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+        <div class="innerdiv" id="firstdiv"></div>
+        <div class="innerdiv" id="seconddiv"></div>
+    </div>
+  </body>
+</html>
