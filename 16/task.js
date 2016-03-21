@@ -21,6 +21,16 @@ function addAqiData() {
   var keyReg = /[^\u4e00-\u9fa5a-zA-Z]/;
   var dataReg = /[^0-9]/;
   var flag = true;
+  if(key === ''){
+    alert("请输入城市名称！");
+    cityInput.focus();
+    flag = false;
+  }
+  if(data === ''){
+    alert("请输入指数！");
+    valueInput.focus();
+    flag = false;
+  }
   if(keyReg.test(key)){
     alert("输入城市名称不合法，只能输入汉字和英文字母,请重新输入!");
     cityInput.value = '';
