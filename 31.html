@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>task 31</title>
+    <style>
+      #firstbox{
+        display: block;
+      }
+      #secondbox{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <form id="theform" action="post">
+        <input id="student" type="radio" name="stu" value="student" checked/>
+        <label for="student">在校生</label>
+        <input id="notstudent" type="radio" name="stu" value="notstudent" />
+        <label for="notstudent">非在校生</label>
+        <div id="firstbox">
+          <select name="city" id="city">
+            <option value="select">请选择</option>
+            <option value="beijing">北京</option>
+            <option value="shanghai">上海</option>
+            <option value="nanjing">南京</option>
+            <option value="haerbin">哈尔滨</option>
+          </select>
+          <select id="college" name="collage">
+            <option value="select">请选择</option>
+          </select>
+        </div>
+        <div id="secondbox">
+          <label for="danwei">就业单位</label>
+          <input id="danwei" type="text" name="danwei" />
+        </div>
+      </form>
+    </div>
+    <script>
+      //数据
+      var data = {
+        "beijing": [
+          "北京大学",
+          "清华大学",
+          "北京林业大学"
+        ],
+        "shanghai": [
+          "东华大学"
+        ],
+        "nanjing": [
+          "南京大学"
+        ],
+        "haerbin": [
+          "哈尔滨工程大学"
+        ]
+      };
+      //处理切换
+      var stus = document.getElementsByName('stu');
+          first = document.getElementById('firstbox'),
+          second = document.getElementById('secondbox');
+      stus[1].onclick = function(){
+        first.style.display = 'none';
+        second.style.display = 'block';
+      };
+      stus[0].onclick = function(){
+        second.style.display = 'none';
+        first.style.display = 'block';
+      };
+      //二级联动的实现
+      var selecteBox = document.getElementById('city');
+      var college = document.getElementById('college');
+      selecteBox.onchange = function(){
+        var selectedOption = selecteBox.options[selecteBox.selectedIndex].value;
+        var options;
+        switch (selectedOption) {
+          case "beijing":
+            options = data["beijing"];
+            break;
+          case "shanghai":
+            options = data["shanghai"];
+            break;
+          case "nanjing":
+            options = data["nanjing"];
+            break;
+          case "haerbin":
+            options = data["haerbin"];
+            break;
+          default:
+        }
+        render(options);
+      };
+      function render(options){
+        //将原有option清空
+        //for(var i = 0, len = college.options.length; i < len; i++){
+        //  college.remove(i);
+        //}
+        college.innerHTML = "";
+        var itemsHTML = '';
+        for(var i = 0; i < options.length; i++){
+          itemsHTML += '<option>' + options[i] + '</option>';
+        }
+        college.innerHTML = itemsHTML;
+      }
+    </script>
+  </body>
+</html>
