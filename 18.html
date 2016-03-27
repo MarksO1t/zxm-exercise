@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>task 18</title>
+    <style>
+      span{
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        background-color: red;
+        color: white;
+        margin-right: 20px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input type="text" id="data"/>
+      <input type="button" value="左侧入" id="btn1"/>
+      <input type="button" value="右侧入" id="btn2"/>
+      <input type="button" value="左侧出" id="btn3"/>
+      <input type="button" value="右侧出" id="btn4"/>
+    </form>
+    <div id="box"></div>
+    <script>
+      var number = document.getElementById('data'),
+          box = document.getElementById('box'),
+          btn1 = document.getElementById('btn1'),
+          btn2 = document.getElementById('btn2'),
+          btn3 = document.getElementById('btn3'),
+          btn4 = document.getElementById('btn4');
+      //获取数据
+      function getData(){
+        var data = number.value.trim();
+        if(data === ""){
+          alert("输入无效，请重新输入！");
+          number.focus();
+        }else{
+          return data;
+        }
+      }
+      //创建新的数字块节点
+      function createBox(data){
+        var newNode = document.createElement('span');
+        newNode.innerHTML = data;
+        return newNode;
+      }
+      //左侧入
+      btn1.onclick = function(){
+        var data = getData();
+        if(data !== undefined){
+          var newNode = createBox(data);
+          box.insertBefore(newNode, box.firstChild);
+          number.value = '';
+          number.focus();
+        }
+      };
+      //右侧入
+      btn2.onclick = function(){
+        var data = getData();
+        if(data !== undefined){
+          var newNode = createBox(data);
+          box.appendChild(newNode);
+          number.value = '';
+          number.focus();
+        }
+      };
+      //左侧出
+      btn3.onclick = function(){
+        alert(box.firstChild.innerHTML + '从左侧出');
+        box.removeChild(box.firstChild);
+        number.focus();
+      };
+      btn4.onclick = function(){
+        alert(box.lastChild.innerHTML + '从右侧出');
+        box.removeChild(box.lastChild);
+        number.focus();
+      };
+    </script>
+  </body>
+</html>
