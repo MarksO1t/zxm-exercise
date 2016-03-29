@@ -101,7 +101,7 @@
         for(var i = 0; i < len; i++){
           var item = box.childNodes.item(i);
           item.style.backgroundColor="red";
-          if((!item.innerHTML.indexOf(data)) || (item.innerHTML.indexOf(data) > 0)){
+          if(item.innerHTML.indexOf(data) >= 0){
             item.style.backgroundColor="blue";
           };
         }
