@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>task 21</title>
+    <style>
+      #tagBox{
+        width: 1000px;
+        height: 50px;
+      }
+      span{
+        display: inline-block;
+        padding: 5px;
+        margin: 5px;
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    Tag:<input type="text" id="tag" />
+    <div id="tagBox"></div>
+    <textarea id="multiTag" rows="8" cols="40"></textarea>
+    <input type="button" id="addmultiTag" value="确认兴趣爱好" />
+    <div id="box"></div>
+    <script>
+      var tag = document.getElementById('tag'),
+          tagBox = document.getElementById('tagBox'),
+          multiTag = document.getElementById('multiTag'),
+          addmultiTag = document.getElementById('addmultiTag');
+      var arr = [];
+      //创建新的tag块节点
+      function createTag(data){
+        var newTag = document.createElement('span');
+        newTag.innerHTML = data;
+        return newTag;
+      }
+      //检查是否已经存在Tag
+      function isTag(data){
+        for(var i = 0; i < arr.length; i++){
+          if(arr[i] == data){
+            return true;
+          }
+        }
+        return false;
+      }
+      //第一个tag框
+      tag.onkeydown = function(event){
+        var e = event || window.event;
+        if((e.keyCode == 13) || (e.keyCode == 9) || (e.keyCode == 32) || (e.keyCode == 188)){
+          var data = tag.value.trim();
+          if((data != '') && (data != ',')){
+            if(e.keyCode == 188)data.substring(0, data.length);
+            if(!isTag(data)){
+              arr.push(data);
+              var newTag = createTag(data);
+              tagBox.appendChild(newTag, tagBox.firstChild);
+              if(arr.length > 10){
+                tagBox.removeChild(tagBox.firstChild);
+              }
+            }else{
+              alert('Tag已经存在！');
+            }
+            tag.value = '';
+            tag.focus();
+          }
+        }
+      };
+      //删除tag事件
+      tagBox.onmouseover = function(event){
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if(target.tagName.toLowerCase() == 'span'){
+          target.innerHTML = '点击删除' + target.innerHTML;
+          target.style.backgroundColor = 'blue';
+        }
+      }
+      tagBox.onmouseout = function(event){
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if(target.tagName.toLowerCase() == 'span'){
+          target.innerHTML = target.innerHTML.replace('点击删除', '');
+          target.style.backgroundColor = 'red';
+        }
+      }
+      tagBox.onclick = function(event){
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+        if(target.tagName.toLowerCase() == 'span'){
+          tagBox.removeChild(target);
+        }
+      }
+      //数组去重,利用哈希表
+      function getArray(a) {
+        var hash = {},
+            len = a.length,
+            result = [];
+
+        for (var i = 0; i < len; i++){
+          if (!hash[a[i]]){
+            hash[a[i]] = true;
+            result.push(a[i]);
+          }
+        }
+         return result;
+      }
+      //多个元素的Tag框
+      addmultiTag.onclick = function(){
+        var data = multiTag.value.trim();
+        data = data.split(/[\n\r\t\s,，、;；]+/g);
+        data = getArray(data);
+        if(data.length > 10){
+          for(var i = data.length - 10; i < data.length; i++){
+              var newTag = createTag(data[i]);
+              box.appendChild(newTag);
+          }
+        }else{
+          for(var i = 0; i < data.length; i++){
+              var newTag = createTag(data[i]);
+              box.appendChild(newTag);
+          }
+        }
+        multiTag.value = '';
+        multiTag.focus();
+      };
+    </script>
+  </body>
+</html>
