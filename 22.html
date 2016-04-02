@@ -1,0 +1,137 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <script>
+    var id = 0;
+    var maxDeepth = 4;
+    function createBT(deepth){
+      var ele = document.createElement('span');
+      ele.id = id + "";
+      id += 1;
+      ele.className = 'borderedDiv';
+      if (deepth === maxDeepth) {
+        return ele;
+      }
+      ele.appendChild(createBT(deepth + 1));
+      ele.appendChild(createBT(deepth + 1));
+      return ele;
+    }
+
+    var timeDelay;
+    function preOrder(ele){
+      if (!ele) {
+        return ;
+      }
+      var sequence = [];
+      sequence = sequence.concat(ele);
+      sequence = sequence.concat(preOrder(ele.childNodes[0]));
+      sequence = sequence.concat(preOrder(ele.childNodes[1]));
+      return sequence;
+    }
+
+    function postOrder(ele){
+      if (!ele) {
+        return ;
+      }
+      var sequence = [];
+      sequence = sequence.concat(postOrder(ele.childNodes[0]));
+      sequence = sequence.concat(ele);
+      sequence = sequence.concat(postOrder(ele.childNodes[1]));
+      return sequence;
+    }
+
+    function middleOrder(ele){
+      if (!ele) {
+        return ;
+      }
+      var sequence = [];
+      sequence = sequence.concat(middleOrder(ele.childNodes[0]));
+      sequence = sequence.concat(ele);
+      sequence = sequence.concat(middleOrder(ele.childNodes[1]));
+      return sequence;
+    }
+
+    var animating = false;
+    function animated(sequence) {
+      animating = true;
+      sequence = sequence.filter((value) => {
+        return value != undefined;
+      })
+      var i = 0, length = sequence.length, lastOne;
+      var thisInterval = setInterval(() => {
+        if (i < length) {
+          if (lastOne) {
+            lastOne.className = 'borderedDiv';
+          }
+          lastOne = sequence[i];
+          sequence[i].className = sequence[i].className + ' currentNode';
+          i++;
+        } else {
+          animating = false;
+          lastOne.className = 'borderedDiv';
+          alert('Iterate success!');
+          clearInterval(thisInterval);
+        }
+      }, timeDelay);
+    }
+
+    function render(func) {
+      if (animating) {
+        alert('Animating, please wait.');
+        return;
+      }
+      var delayInput = document.getElementById('delay');
+      var delay = delayInput.value;
+      if(!isNaN(delay)) {
+        timeDelay = delay;
+      } else {
+        alert('输入错误，恢复默认1000。');
+        delayInput.value = 1000;
+        timeDelay = 1000;
+      }
+      var area = document.getElementById('renderArea');
+      animated(func(area.childNodes[1]));
+    };
+
+    window.onload = function() {
+      var area = document.getElementById('renderArea');
+      area.appendChild(createBT(1));
+    }
+
+  </script>
+
+  <style>
+    .borderedDiv {
+      display: inline-block;
+      padding: 10px;
+      margin: 5px;
+      min-width: 20px;
+      min-height: 20px;
+      border: 2px solid #789;
+    }
+
+    .currentNode {
+      background-color: rgba(123, 123, 123, 0.5);
+    }
+    button {
+      font-size: 16px;
+      color: white;
+      padding: 20px;
+      background-color: #ABC;
+      margin: 20 auto;
+    }
+  </style>
+</head>
+<body style="display:flex">
+  <div style="flex:1"></div>
+  <div style="width:100px; flex:0.5">
+    <label>请输入延迟</label><input type="text" id='delay' value="1000"></input>
+    <button onclick="render(preOrder)">先序遍历</button>
+    <button onclick="render(middleOrder)">中序遍历</button>
+    <button onclick="render(postOrder)">后序遍历</button>
+  </div>
+  <div id="renderArea" style="margin: auto;">
+  </div>
+  <div style="flex:1"></div>
+</body>
+</html>
